@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme du Mariage</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div id="contenu">
+        <h1>Programme du Mariage</h1>
+        <p>14h00 - Cérémonie</p>
+        <p>16h00 - Cocktail</p>
+        <p>19h00 - Dîner</p>
+        <p>21h00 - Soirée dansante</p>
+    </div>
+
+    <script>
+        // Définir la date et l'heure de fin du mariage (exemple : 21 juillet 2024 à 23h59)
+        const finMariage = new Date('2024-07-21T23:59:00').getTime();
+
+        function mettreAJourContenu() {
+            const maintenant = new Date().getTime();
+            if (maintenant > finMariage) {
+                document.getElementById('contenu').innerHTML = "<h1>Merci d'être venu à notre mariage !</h1>";
+            }
+        }
+
+        // Vérifier toutes les minutes
+        setInterval(mettreAJourContenu, 60000);
+
+        // Vérifier immédiatement au chargement de la page
+        mettreAJourContenu();
+    </script>
+</body>
+</html>
