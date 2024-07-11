@@ -37,21 +37,36 @@
             margin-bottom: 30px;
         }
 
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-
         .event {
             background-color: #f0e6e6;
             border-radius: 5px;
             padding: 15px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
         }
 
-        .time {
+        .badge {
+            background-color: #8e7474;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 7px;
+            font-size: 0.9em;
             font-weight: bold;
-            color: #8e7474;
+            margin-right: 15px;
+        }
+
+        .event-description {
+            font-size: 1.1em;
+        }
+
+        #merciImage {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
         }
 
         @media (max-width: 480px) {
@@ -67,27 +82,35 @@
                 font-size: 2em;
             }
 
-            p {
-                font-size: 1em;
+            .event {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .badge {
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
-    
 <body>
     <div id="contenu">
         <h1>Programme du Mariage</h1>
         <div class="event">
-            <p><span class="time">14h00</span> - Cérémonie</p>
+            <span class="badge">14h00</span>
+            <span class="event-description">Cérémonie</span>
         </div>
         <div class="event">
-            <p><span class="time">16h00</span> - Cocktail</p>
+            <span class="badge">16h00</span>
+            <span class="event-description">Cocktail</span>
         </div>
         <div class="event">
-            <p><span class="time">19h00</span> - Dîner</p>
+            <span class="badge">19h00</span>
+            <span class="event-description">Dîner</span>
         </div>
         <div class="event">
-            <p><span class="time">21h00</span> - Soirée dansante</p>
+            <span class="badge">21h00</span>
+            <span class="event-description">Soirée dansante</span>
         </div>
     </div>
 
@@ -98,12 +121,28 @@
         function mettreAJourContenu() {
             const maintenant = new Date().getTime();
             if (maintenant > finMariage) {
-                document.getElementById('contenu').innerHTML = "<h1>Merci d'être venu à notre mariage !</h1>";
+                document.getElementById('contenu').innerHTML = `
+                    <h1>Merci d'être venu à notre mariage !</h1>
+                    <img id="merciImage" src="/api/placeholder/600/400" alt="Merci pour votre présence" />
+                `;
+                // Arrêter la vérification une fois que le contenu a été mis à jour
+                clearInterval(intervalId);
             }
         }
 
-        // Vérifier toutes les minutes
-        setInterval(mettreAJourContenu, 60000);
+        // Calculer le temps restant jusqu'à la fin du mariage
+        const tempsRestant = finMariage - new Date().getTime();
+
+        if (tempsRestant > 0) {
+            // Si le mariage n'est pas encore terminé, définir un timeout pour mettre à jour le contenu à l'heure exacte
+            setTimeout(mettreAJourContenu, tempsRestant);
+        } else {
+            // Si le mariage est déjà terminé, mettre à jour le contenu immédiatement
+            mettreAJourContenu();
+        }
+
+        // Vérifier toutes les minutes au cas où la page resterait ouverte longtemps
+        const intervalId = setInterval(mettreAJourContenu, 60000);
 
         // Vérifier immédiatement au chargement de la page
         mettreAJourContenu();
