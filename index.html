@@ -116,7 +116,7 @@
 
     <script>
         // Définir la date et l'heure de fin du mariage (exemple : 21 juillet 2024 à 23h59)
-        const finMariage = new Date('2024-07-21T23:59:00').getTime();
+        const finMariage = new Date('2024-07-11T14:55:00').getTime();
 
         function mettreAJourContenu() {
             const maintenant = new Date().getTime();
@@ -142,7 +142,7 @@
         }
 
         // Vérifier toutes les minutes au cas où la page resterait ouverte longtemps
-        const intervalId = setInterval(mettreAJourContenu, 60000);
+        const intervalId = setInterval(mettreAJourContenu, 10000);
 
         // Vérifier immédiatement au chargement de la page
         mettreAJourContenu();
